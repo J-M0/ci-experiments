@@ -18,3 +18,24 @@ jobs:
         run: pip install tox coveralls
       - name: Run Tox
         run: tox -e py
+      - name: Upload Coverage
+        run: coveralls
+        env:
+          COVERALLS_PARALLEL: true
+          COVERALLS_FLAG_NAME: run-${{ matrix.os }}-${{ matrix.python-version }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  finish:
+      needs: [ unit-tests ]
+      runs-on: ubuntu-16.04
+
+      steps:
+        - uses: actions/setup-python@v2
+          with:
+            python-version: 3.6
+        - name: Finish Coveralls
+          run: |
+            pip install coveralls
+            coveralls --finish
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
