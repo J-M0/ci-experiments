@@ -22,7 +22,7 @@ jobs:
         run: coveralls
         env:
           COVERALLS_PARALLEL: true
-          COVERALLS_FLAG_NAME: run-${{ matrix.os }}-${{ matrix.python-version }}
+          # COVERALLS_FLAG_NAME: run-${{ matrix.os }}-${{ matrix.python-version }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   finish:
