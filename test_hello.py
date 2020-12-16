@@ -1,10 +1,4 @@
-import unittest
 import hello
 
-class TestHello(unittest.TestCase):
-    
-    def test_hello(self):
-        self.assertEqual(hello.hello_str(), "Hello world")
-
-if __name__ == "__main__":
-    unittest.main()
+def test_hello():
+    assert hello.hello_str() == "Hello world"
