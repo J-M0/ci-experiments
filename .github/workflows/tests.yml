@@ -1,6 +1,12 @@
 name: Tox Tests
 on: [push, pull_request]
 jobs:
+  brew-tap-info:
+    runs-on: macos-10.15
+    steps:
+      - name: info
+        run: brew tap
+
   unit-tests:
     runs-on: ${{ matrix.os }}
     strategy:
