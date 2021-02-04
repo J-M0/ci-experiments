@@ -4,8 +4,9 @@ jobs:
   unit-tests:
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
-        os: [ubuntu-16.04, macos-10.15]
+        os: [ubuntu-latest]
         python-version: [3.5, 3.6, 3.7, 3.8, 3.9]
 
     steps:
@@ -15,27 +16,6 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install requirements
-        run: pip install tox coveralls
+        run: pip install tox
       - name: Run Tox
         run: tox -e py
-      - name: Upload Coverage
-        run: coveralls
-        env:
-          COVERALLS_PARALLEL: true
-          # COVERALLS_FLAG_NAME: run-${{ matrix.os }}-${{ matrix.python-version }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  finish:
-      needs: [ unit-tests ]
-      runs-on: ubuntu-16.04
-
-      steps:
-        - uses: actions/setup-python@v2
-          with:
-            python-version: 3.6
-        - name: Finish Coveralls
-          run: |
-            pip install coveralls
-            coveralls --finish
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
