@@ -15,5 +15,6 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - run: sudo apt-get update && sudo apt-get -y install python3-gpg python3-pip
+        if: ${{ matrix.os != 'macos-latest' }}
       - run: pip list -v
       - run: env
